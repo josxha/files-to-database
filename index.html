@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Add File to IndexedDB</title>
+</head>
+    <body>
+        <h1>Demo: Speichere eine Liste von Dateien in der Datenbank ab.</h1>
+        <br />
+        <p>1. Beim Aufruf der Seite wurde die Datenbank "MyDB" erstellt. Die unten angezeigten Bilder (1,2,3) wurden von der Webseite geladen.</p>
+        <p>2. Beim Klick auf den Button werden dre Bilder als BLOB Objekte hineingespeichert (muss beim installieren der App aufgerufen werden).</p>
+        <button onclick="storeFilesToDatabase()">Auf geht's!</button>
+        <p>3. Nun sollten sich drei Bilder in der Datenbanktabelle befinden (Datenbank muss wahrscheinlich neu geladen werden, damit sie angezeigt werden).</p>
+        <script src="handleResources.js"></script>
+    </body>
+</html>
