@@ -70,19 +70,31 @@ function saveResource(key, blob){
     };
 }
 
+// TODO integrate this code into the fetch-eventListener in the service worker file
 addEventListener('fetch', function (event) {
-    // TODO integrate this code into the fetch-eventListener in the service worker file
-    getResource(
-        event.srcElement["documentURI"],
-        function (resource) {
-            console.log("Resource was loaded from the database table.");
-            event.respondWith(resource);
-        },
-        function () {
-            console.log("Resource was loaded from the web.");
-            return fetch(event.request)
+    const requestedUrl = new URL(event.request.url);
+
+    // try to answer request from cache
+    event.respondWith(async function() {
+        let response = await caches.match(event.request);
+        if (response !== undefined) {
+            console.log(requestedUrl + " was loaded from the cache.");
+            return response;
         }
-    )
+
+        // try to get resource from IndexedDB
+        getResource(
+            requestedUrl,
+            function (resource) {
+                console.log(requestedUrl + " was loaded from the IndexedDB resource table.");
+                event.respondWith(resource);
+            },
+            function () {
+                console.log(requestedUrl + " was loaded from the web.");
+                return fetch(event.request)
+            }
+        );
+    });
 });
 
 
