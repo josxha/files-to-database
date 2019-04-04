@@ -38,9 +38,20 @@ function initDatabase() {
 }
 
 function storeFilesToDatabase() {
+    let totalFiles = urls.length;
+    let progressTextElement = document.getElementById('progressText');
+    let counterSuccess = 0;
+    let counterFailed = 0;
     urls.forEach(function (url) {
         getBLOB(url, function (blob) {
-            saveResource(url, blob)
+            if (blob !== null) {
+                saveResource(url, blob);
+                counterSuccess++;
+            } counterFailed++;
+            let tmpText = "Datei " + counterSuccess + " von " + totalFiles + " wird heruntergeladen.";
+            if (counterFailed > 0)
+                tmpText += "<br>" + counterFailed + " Dateien konnten nicht heruntergeladen werden.";
+            progressTextElement.innerText = tmpText
         });
     });
 }
@@ -53,7 +64,7 @@ function getBLOB(url, runOnFinished) {
     xhr.addEventListener("load", function () {
         if (xhr.status === 200) {
             runOnFinished(xhr.response);
-        }
+        } else runOnFinished(null);
     }, false);
     xhr.send();
 }
