@@ -48,7 +48,7 @@ function storeFilesToDatabase() {
                 saveResource(url, blob);
                 counterSuccess++;
             } counterFailed++;
-            let tmpText = "Datei " + counterSuccess + " von " + totalFiles + " wird heruntergeladen.";
+            let tmpText = "Datei " + counterSuccess + " von " + totalFiles + " wurde heruntergeladen.";
             if (counterFailed > 0)
                 tmpText += "<br>" + counterFailed + " Dateien konnten nicht heruntergeladen werden.";
             progressTextElement.innerText = tmpText
